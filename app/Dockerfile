@@ -8,7 +8,7 @@ COPY . /app
 WORKDIR /app
 
 # This runs pip install for all the packages listed in your requirements.txt file.
-RUN pip install tensorflow==2.15.0.post1
+RUN pip3 install tensorflow
 RUN pip install streamlit==1.30.0
 RUN pip install numpy==1.26.3
 
