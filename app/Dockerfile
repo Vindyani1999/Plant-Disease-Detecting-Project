@@ -8,7 +8,11 @@ COPY . /app
 WORKDIR /app
 
 # This runs pip install for all the packages listed in your requirements.txt file.
-RUN pip install -r requirements.txt
+RUN pip install tensorflow==2.15.0.post1
+RUN pip install streamlit==1.30.0
+RUN pip install numpy==1.26.3
+
+
 
 # This tells Docker to listen on port 80 at runtime. Port 80 is the standard port for HTTP.
 EXPOSE 80
