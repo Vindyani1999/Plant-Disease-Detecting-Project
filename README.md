@@ -315,9 +315,35 @@ Using this Dockerfile, we can create the Docker image and then create the Docker
        return predicted_class_name
   ```
   - Here we have creted 2 functions.
+  - > First one for image loading
+  - > Second one for class predicting
  
   - In the first function we have image path for taking the image and target size, in the actual senario we dont know what size image is going to provide as input by the user. so we have to give target size to resize it.
-  
+  - We are going to open that uploaded image using PIL library
+  - and resizing it using target sizr (224,224)
+  - after that we have to convert those image into numpy array to do prediction
+  - we ahve to resize the all pixels in the array by dividing 255
+  - finally return the rescaled image
+ 
+  - Now the image is suitable to passes through the network and do a prediction
+ 
+  - second function has three parametes model which we are going to use to have a prediction, image path which is the path uploaded image is presented and class_indices. what is this class_indices. we know that after done the prediction the output layer is saying index 16th index is having maximum probability like that. but user doesnt know what is this 10th index or 16index. so we have to create a dictionary which include indexes and corresponded class name.
+    ```bash
+    class_indices = {v: k for k, v in train_generator.class_indices.items()}
+
+    ```
+  - prediction is done by predictions = model.predict(preprocessed_img) using scaled image
+  - this prediction gives 38 probability values becuse we are having 38 classes. now we need to get the class index of which having maximum probability using predicted_class_index = np.argmax(predictions, axis=1)[0]
+ 
+  - Now we are going to save our class indexes in json format and then we can download it and use in our streamlit application.
+ 
+    ```bash
+    json.dump(class_indices, open('class_indices.json', 'w'))
+    ```
+  - For saving the model you can mount your google drive or directly save into path which u are working on.
+  ```bash
+  model.save('plant_disease_prediction_model.h5')
+  ```
   
 
   
